@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 import { BiBuildingHouse } from "react-icons/bi";
 import { FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 import { FiFacebook } from "react-icons/fi";
@@ -41,58 +39,43 @@ const Footer = () => {
           </div>
 
           <div className="flex-1 basis-[10rem]">
-            <h2 className="text-xl font-semibold">Services</h2>
+            <h2 className="text-xl font-semibold">Features</h2>
             <ul>
               <li className="my-3 text-muted">
-                <a href="#"> Order Tracking</a>
+                <a href="/about-us">About</a>
               </li>
               <li className="my-3 text-muted">
-                <a href="#">Whislist</a>
+                <a href="/services">Services</a>
               </li>
               <li className="my-3 text-muted">
-                <a href="#">Terms of use</a>
-              </li>
-              <li className="my-3 text-muted">
-                <a href="#">Contact support</a>
-              </li>
-              <li className="my-3 text-muted">
-                <a href="#">2 year guarantee</a>
+                <a href="#">Listing</a>
               </li>
             </ul>
           </div>
 
           <div className="flex-1 basis-[10rem]">
-            <h2 className="text-xl font-semibold">Quick Links</h2>
+            <h2 className="text-xl font-semibold">Information</h2>
             <ul>
               <li className="my-3 text-muted">
-                <a href="#"> About Us</a>
+                <a href="/contact"> Contact</a>
               </li>
               <li className="my-3 text-muted">
-                <a href="#">Services</a>
+                <a href="/team">Team</a>
               </li>
               <li className="my-3 text-muted">
-                <a href="#">Blog</a>
-              </li>
-              <li className="my-3 text-muted">
-                <a href="#">Portifolio</a>
+                <a href="/faqs">FAQ</a>
               </li>
             </ul>
           </div>
 
           <div className="flex-1 basis-[10rem]">
-            <h2 className="text-xl font-semibold">Business</h2>
+            <h2 className="text-xl font-semibold">Documentation</h2>
             <ul>
               <li className="my-3 text-muted">
-                <a href="#"> Success</a>
+                <a href="/blog">Blog</a>
               </li>
               <li className="my-3 text-muted">
-                <a href="#">Guide</a>
-              </li>
-              <li className="my-3 text-muted">
-                <a href="#">Mission</a>
-              </li>
-              <li className="my-3 text-muted">
-                <a href="#">Terms & Conditions</a>
+                <a href="#">License</a>
               </li>
               <li className="my-3 text-muted">
                 <a href="#">Pricacy Policy</a>
@@ -100,28 +83,11 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className="flex-1 basis-[10rem] text-center md:text-left">
-            <h2 className="text-xl font-semibold">
-              Subscribe to our Newsletter
-            </h2>
-            <p className="text-sm text-muted">
-              Subscribe to be the first one to know about updates. Enter your
-              email
-            </p>
-            <div className="justify-center my-3 flex-align-center">
-              <input
-                type="text"
-                className="px-4 py-[0.35rem] card-bordered dark:shadow-none outline-none bg-transparent rounded-lg border-dark"
-                placeholder="Email Address.."
-              />
-              <button className="-ml-2 btn btn-primary">subscribe</button>
-            </div>
-          </div>
         </div>
       </footer>
       <div className="py-2 mt-3 text-center border-t text-muted border-dark">
         <p>
-          Created By <span className="text-primary">Wabweni Brian</span> | All
+           All
           Rights Reserved
         </p>
       </div>

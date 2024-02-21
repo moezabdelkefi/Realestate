@@ -1,9 +1,10 @@
+
 import { BiBed, BiMap, BiMapAlt, BiTab } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import CardHoverIcons from "./CardHoverIcons";
 import CardLabels from "./CardLabels";
 
 const SingleProductCard = ({
+  id,
   name,
   location,
   price,
@@ -29,7 +30,6 @@ const SingleProductCard = ({
             className="w-full  h-fit md:h-[250px] object-cover group-hover:scale-125 transition-a"
           />
         </Link>
-        <CardHoverIcons />
         <div className="absolute bottom-0 left-0 w-full px-2 py-2 transition-transform bg-gradient-to-t from-black/80 sm:translate-y-10 group-hover:translate-y-0 to-transparent">
           <div className="text-white flex-align-center gap-x-2">
             <BiMap />
@@ -65,7 +65,7 @@ const SingleProductCard = ({
 
         <div className="mt-4 flex-center-between">
           <h1 className="text-lg font-semibold text-primary">${price}</h1>
-          <button className="btn btn-secondary">details</button>
+          <button className="btn btn-secondary"><Link to={`/PropertyDetails/${id}`}>details</Link></button>
         </div>
       </div>
     </div>

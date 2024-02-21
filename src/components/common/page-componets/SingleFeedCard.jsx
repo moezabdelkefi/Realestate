@@ -9,6 +9,8 @@ const SingleFeedCard = ({
   category,
   author,
 }) => {
+
+
   return (
     <div className="flex-1 basis-[18rem] shadow-light dark:border-card-dark border rounded-lg overflow-hidden relative group">
       <div className="group !opacity-100 overflow-hidden">
@@ -35,7 +37,10 @@ const SingleFeedCard = ({
         >
           <h1 className="text-lg font-semibold capitalize">{title}</h1>
         </Link>
-        <Link className="mt-4 flex-align-center gap-x-2 hover:underline text-primary">
+
+
+
+        <Link   to={`/BlogDetails/${id}`} className="mt-4 flex-align-center gap-x-2 hover:underline text-primary">
           <span className="uppercase hover:underline">read more</span>{" "}
           <FiArrowRight />
         </Link>

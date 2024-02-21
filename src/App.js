@@ -28,11 +28,17 @@ import {
   Faqs,
   PageNotFound,
   Home,
+  BlogDetails,
+  Login,
+  SignIn,
+  PropertyDetails,
+  AgentList,
 } from "./pages";
 import { closeDropdown } from "./features/uiSlice";
 import Dropdown from "./components/common/DropDown";
 import NewsLetter from "./components/common/NewsLetter";
 import Loader from "./components/common/Loader";
+
 function App() {
   const [showButton, setShowButton] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
@@ -57,10 +63,14 @@ function App() {
     setShowLoader(false);
   });
 
+  const isLoginPage = route.pathname === "/Login";
+  const isSinginPage = route.pathname === "/SignIn";
+
   return (
     <div>
       {showLoader && <Loader />}
-      <Navbar />
+      {/* Conditionally render Navbar if route is not Login or Singin */}
+      {!isLoginPage && !isSinginPage && <Navbar />}
       <Dropdown />
       <div
         className="min-h-screen pb-40"
@@ -91,15 +101,23 @@ function App() {
           <Route path="/team" element={<Team />} />
           <Route path="/faqs" element={<Faqs />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/BlogDetails/:id" element={<BlogDetails />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/SignIn" element={<SignIn />} />
+          <Route path="/PropertyDetails/:id" element={<PropertyDetails/>} />
+          <Route path="/AgentList" element={<AgentList />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>
-      <div className="px-[2%] md:px-[6%] bg-card-dark border border-card-dark">
-        <NewsLetter />
-        <div className="mt-20">
-          <Footer />
+      {/* Conditionally render Footer if route is not Login or Singin */}
+      {!isLoginPage && !isSinginPage && (
+        <div className="px-[2%] md:px-[6%] bg-card-dark border border-card-dark">
+          <NewsLetter />
+          <div className="mt-20">
+            <Footer />
+          </div>
         </div>
-      </div>
+      )}
       <BackToTopButton showButton={showButton} />
     </div>
   );

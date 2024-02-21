@@ -35,7 +35,7 @@ const SingleFeedCardGrid = ({
           by {author?.name}: {date_posted}
         </p>
         <p className="mt-2">{description.slice(0, 200)}...</p>
-        <Link className="mt-4 flex-align-center gap-x-2 hover:underline text-primary">
+        <Link to={`/blog`} className="mt-4 flex-align-center gap-x-2 hover:underline text-primary">
           <span className="uppercase hover:underline">read more</span>{" "}
           <FiArrowRight />
         </Link>

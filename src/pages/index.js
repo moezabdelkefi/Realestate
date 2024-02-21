@@ -21,3 +21,8 @@ export { default as PortifolioTwo } from "./PortifolioTwo";
 export { default as Team } from "./Team";
 export { default as Faqs } from "./Faqs";
 export { default as PageNotFound } from "./PageNotFound";
+export { default as BlogDetails } from "./BlogDetails";
+export { default as Login } from "./Login";
+export { default as SignIn } from "./SignIn";
+export {default as PropertyDetails} from "./PropertyDetails";
+export {default as AgentList} from "./AgentList";

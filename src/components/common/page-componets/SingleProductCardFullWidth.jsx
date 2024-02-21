@@ -1,9 +1,9 @@
 import { BiBed, BiMap, BiMapAlt, BiTab } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import CardHoverIcons from "./CardHoverIcons";
 import CardLabels from "./CardLabels";
 
 const SingleProductCardFullWidth = ({
+  id,
   name,
   location,
   price,
@@ -28,7 +28,6 @@ const SingleProductCardFullWidth = ({
               className="object-cover w-full h-full group-hover:scale-125 transition-a"
             />
           </Link>
-          <CardHoverIcons />
         </div>
         {!showLabels && <CardLabels purpose={purpose} distance={distance} />}
       </div>
@@ -69,7 +68,7 @@ const SingleProductCardFullWidth = ({
 
           <div className="mt-4 flex-center-between">
             <h1 className="text-lg font-semibold text-primary">${price}</h1>
-            <button className="btn btn-secondary">details</button>
+            <button className="btn btn-secondary"><Link to={`/PropertyDetails/${id}`}>details</Link></button>
           </div>
         </div>
       </div>

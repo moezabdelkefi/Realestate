@@ -1,5 +1,5 @@
 import {
-  Brands,
+  // Brands,
   Counter,
   Featured,
   Projects,
@@ -26,7 +26,7 @@ const Home = () => {
       <Counter />
       <Projects />
       <Testimonial />
-      <Brands />
+      {/* <Brands /> */}
       <Feeds />
     </div>
   );

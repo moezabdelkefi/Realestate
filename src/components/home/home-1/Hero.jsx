@@ -1,3 +1,5 @@
+import CountUp from 'react-countup';
+
 const Hero = () => {
   return (
     <div
@@ -20,23 +22,23 @@ const Hero = () => {
             culpa magni eius?
           </p>
         </div>
-        <button className="mt-6 btn btn-primary">get started</button>
+        {/* <button className="mt-6 btn btn-primary">get started</button> */}
         <div className="mt-6 text-center flex-align-center gap-x-6">
           <div>
             <h1 className="text-2xl font-bold">
-              12k <span className="text-sm text-primary">+</span>
+            <CountUp start={0} end={12}duration={10}></CountUp>k <span className="text-sm text-primary">+</span>
             </h1>
             <p>Requested Projects</p>
           </div>
           <div>
             <h1 className="text-2xl font-bold">
-              15k <span className="text-sm text-primary">+</span>
+            <CountUp start={0} end={15}duration={10}></CountUp>k <span className="text-sm text-primary">+</span>
             </h1>
             <p>Projects Completed</p>
           </div>
           <div>
             <h1 className="text-2xl font-bold">
-              100 <span className="text-sm text-primary">+</span>
+            <CountUp start={0} end={100}duration={10}></CountUp> <span className="text-sm text-primary">+</span>
             </h1>
             <p>Served Clients</p>
           </div>

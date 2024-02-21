@@ -1,5 +1,5 @@
 import { FiCheck, FiLayers, FiUsers } from "react-icons/fi";
-
+import { Link } from "react-router-dom";
 const Speciality = () => {
   return (
     <div className="pt-10 pb-16">
@@ -38,7 +38,8 @@ const Speciality = () => {
               </div>
               <p>Modern city locations and exceptional lifestyle</p>
             </div>
-            <button className="mt-4 btn btn-primary">read more</button>
+            <br/>
+            <Link to="/about-us" className="mt-4 btn btn-primary">read more</Link>
           </div>
         </div>
         <div className="flex-1 basis-[20rem]">
