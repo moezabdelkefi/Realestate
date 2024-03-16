@@ -21,6 +21,6 @@ urlpatterns = [
     path('Property/', include('Property.urls')),
     path('category/', include('category.urls')),
     path('userAuth/', include('userAuth.urls')),
-
-
+    path('Service/', include('Service.urls')),
+    path('temoignages/', include('temoignages.urls')),
 ]
