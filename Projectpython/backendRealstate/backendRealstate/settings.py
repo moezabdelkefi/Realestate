@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'userAuth',
     'corsheaders',
     'Service',
-    'temoignages',
 
 
 
@@ -90,7 +89,7 @@ WSGI_APPLICATION = 'backendRealstate.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'projectrealstate',
+        'NAME': 'backdajngo',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '127.0.0.1',

@@ -2,9 +2,9 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
-from .serializer import UserSerializer, RegisterSerializer
+from .serializer import UserSerializer, RegisterSerializer, TemoinageSerializer, BlogSerializer, ContactSerializer
 from .serializer import RoleSerializer
-from .models import User
+from .models import User, Temoinage, Blog, Contact
 from .models import Role
 #from rest_framework.decorators import api_view, permission_classes
 from rest_framework_jwt.settings import api_settings
@@ -19,6 +19,8 @@ from django.conf import settings
 from django.contrib.auth.hashers import check_password
 from rest_framework.permissions import IsAuthenticated
 # Create your views here.
+
+"""User"""
 @api_view(['POST'])
 def create_user(request):
     if request.method == 'POST':
@@ -67,6 +69,8 @@ def list_users(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+"""Role"""
 @api_view(['POST'])
 def create_role(request):
     if request.method == 'POST':
@@ -100,13 +104,169 @@ def delete_role(request, pk):
         role.delete()
         return Response({"message": "Role deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
 
+"""Temoinage"""
+@api_view(['POST'])
+def create_temoinage(request):
+        if request.method == 'POST':
+            serializer = TemoinageSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['PUT'])
+def update_temoinage(request, pk):
+    try:
+        temoinage = Temoinage.objects.get(pk=pk)
+    except Temoinage.DoesNotExist:
+        return Response({"message": "Temoinage not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'PUT':
+        serializer = TemoinageSerializer(temoinage, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+@api_view(['DELETE'])
+def delete_temoinage(request, pk):
+    try:
+        temoinage = Temoinage.objects.get(pk=pk)
+    except Temoinage.DoesNotExist:
+        return Response({"message": "Temoinage not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'DELETE':
+        temoinage.delete()
+        return Response({"message": "Temoinage deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+def list_temoinages(request):
+    temoinages = Temoinage.objects.all()
+    serializer = TemoinageSerializer(temoinages, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def searchTemoinageById(request, pk):
+    try:
+        temoinage = Temoinage.objects.get(pk=pk)
+        serializer = TemoinageSerializer(temoinage)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except Temoinage.DoesNotExist:
+        return Response({"message": "Temoinage not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+"""Blog"""
+@api_view(['POST'])
+def create_blog(request):
+        if request.method == 'POST':
+            serializer = BlogSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT'])
+def update_blog(request, pk):
+    try:
+        blog = Blog.objects.get(pk=pk)
+    except Blog.DoesNotExist:
+        return Response({"message": "Blog not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'PUT':
+        serializer = BlogSerializer(blog, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['DELETE'])
+def delete_blog(request, pk):
+    try:
+        blog = Blog.objects.get(pk=pk)
+    except Blog.DoesNotExist:
+        return Response({"message": "Blog not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'DELETE':
+        blog.delete()
+        return Response({"message": "Blog deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET'])
+def list_blogs(request):
+    blogs = Blog.objects.all()
+    serializer = BlogSerializer(blogs, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def searchBlogById(request, pk):
+    try:
+        blog = Blog.objects.get(pk=pk)
+        serializer = BlogSerializer(blog)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except Blog.DoesNotExist:
+        return Response({"message": "Blog not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+
+"""Contact"""
+@api_view(['POST'])
+def create_contact(request):
+        if request.method == 'POST':
+            serializer = ContactSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT'])
+def update_contact(request, pk):
+    try:
+        contact = Contact.objects.get(pk=pk)
+    except Contact.DoesNotExist:
+        return Response({"message": "Contact not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'PUT':
+        serializer = ContactSerializer(contact, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['DELETE'])
+def delete_contact(request, pk):
+    try:
+        contact = Contact.objects.get(pk=pk)
+    except Contact.DoesNotExist:
+        return Response({"message": "Contact not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'DELETE':
+        contact.delete()
+        return Response({"message": "Contact deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET'])
+def list_contacts(request):
+    contacts = Contact.objects.all()
+    serializer = ContactSerializer(contacts, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def searchContactById(request, pk):
+    try:
+        contact = Contact.objects.get(pk=pk)
+        serializer = ContactSerializer(contact)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except Contact.DoesNotExist:
+        return Response({"message": "Contact not found"}, status=status.HTTP_404_NOT_FOUND)
 
 
 
 
 
-
-# Create your views here.
+"""Register / Login"""
 class RegisterView(APIView):
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)

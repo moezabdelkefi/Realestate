@@ -1,6 +1,26 @@
 
-from .models import Role , User
+from .models import Role, User, Temoinage, Blog, Contact
 from rest_framework import serializers, validators
+
+class TemoinageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Temoinage
+        fields = '__all__'
+
+
+class BlogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Blog
+        fields = '__all__'
+
+
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
+        fields = '__all__'
+
+
+
 class RoleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Role
