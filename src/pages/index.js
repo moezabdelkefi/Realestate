@@ -26,3 +26,6 @@ export { default as Login } from "./Login";
 export { default as SignIn } from "./SignIn";
 export {default as PropertyDetails} from "./PropertyDetails";
 export {default as AgentList} from "./AgentList";
+export{default as ForgetPasswordPage} from "./ForgetPasswordPage";
+export{default as Testimonial} from "./Testimonial";
+export{default as UpdateProfile} from "./UpdateProfile";

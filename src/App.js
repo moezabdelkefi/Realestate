@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import BackToTopButton from "./components/common/BackToTopButton";
 import Footer from "./components/common/Footer";
 import Navbar from "./components/common/Navbar";
@@ -33,18 +33,22 @@ import {
   SignIn,
   PropertyDetails,
   AgentList,
+  ForgetPasswordPage,
+  Testimonial,
+  UpdateProfile,
 } from "./pages";
 import { closeDropdown } from "./features/uiSlice";
 import Dropdown from "./components/common/DropDown";
 import NewsLetter from "./components/common/NewsLetter";
 import Loader from "./components/common/Loader";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const [showButton, setShowButton] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
   const dispatch = useDispatch();
   const route = useLocation();
-
+  const navigate = useNavigate();
   // Show/Hide scroll to top button
   window.addEventListener("scroll", () => {
     window.scrollY > 500 ? setShowButton(true) : setShowButton(false);
@@ -55,15 +59,15 @@ function App() {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [route]);
+    navigate("/Login");
+  }, []);
 
   // Loader when page is loading
   window.addEventListener("load", () => {
     setShowLoader(false);
   });
 
-  const isLoginPage = route.pathname === "/Login";
+ const isLoginPage = route.pathname === "/Login";
   const isSinginPage = route.pathname === "/SignIn";
 
   return (
@@ -104,20 +108,24 @@ function App() {
           <Route path="/BlogDetails/:id" element={<BlogDetails />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/SignIn" element={<SignIn />} />
-          <Route path="/PropertyDetails/:id" element={<PropertyDetails/>} />
+          <Route path="/PropertyDetails/:id" element={<PropertyDetails />} />
           <Route path="/AgentList" element={<AgentList />} />
-          <Route path="*" element={<PageNotFound />} />
+          <Route path="/ForgetPasswordPage" element={<ForgetPasswordPage />} />
+          <Route path="/Testimonial" element={<Testimonial />} />
+          <Route path="/UpdateProfile" element={<UpdateProfile />} />
+          {/* Redirection vers /Login */}
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
       {/* Conditionally render Footer if route is not Login or Singin */}
-      {!isLoginPage && !isSinginPage && (
+      {/* {!isLoginPage && !isSinginPage && (
         <div className="px-[2%] md:px-[6%] bg-card-dark border border-card-dark">
           <NewsLetter />
           <div className="mt-20">
             <Footer />
           </div>
         </div>
-      )}
+      )} */}
       <BackToTopButton showButton={showButton} />
     </div>
   );

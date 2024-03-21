@@ -4,6 +4,7 @@ import { BiSearch, BiMenu, BiUser, BiBuildingHouse } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaSignInAlt } from 'react-icons/fa';
+
 import {
   closeDropdown,
   closeSidebar,
@@ -159,21 +160,17 @@ const Navbar = () => {
           >
             {darkMode ? <FiSun /> : <FiMoon />}
           </div>
-          {isLoggedIn && (
-            <div className="relative">
-              <BiUser className="bg-white shadow-md icon-box dark:bg-dark-light hover:shadow-lg hover:bg-transparent cursor-pointer" onClick={() => setShowProfileMenu(!showProfileMenu)} />
-              {showProfileMenu && (
-                <div className="absolute right-0 top-full bg-white shadow-md dark:bg-dark-light mt-1 w-36 rounded-md overflow-hidden">
-                  <button onClick={handleLogout} className="block px-4 py-2 text-gray-800 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800">Se déconnecter</button>
-                </div>
-              )}</div>
-          )}
           {!isLoggedIn && (
-            <div className="bg-white shadow-md icon-box dark:bg-dark-light hover:shadow-lg hover:bg-transparent" onClick={handleLogin}>
-              <FaSignInAlt /> {/* Utilisez l'icône de connexion */}
-            </div>
-          )}
-
+  <div className="relative">
+    <BiUser className="bg-white shadow-md icon-box dark:bg-dark-light hover:shadow-lg hover:bg-transparent cursor-pointer" onClick={() => setShowProfileMenu(!showProfileMenu)} />
+    {showProfileMenu && (
+      <div className="absolute right-0 top-full bg-white shadow-md dark:bg-dark-light mt-1 w-36 rounded-md overflow-hidden">
+         <Link to="/UpdateProfile" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800">Update Profile</Link>
+        <Link to="/Login" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800">Logout </Link>
+      </div>
+    )}
+  </div>
+)}
 
         </div>
 
