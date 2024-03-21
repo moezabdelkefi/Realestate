@@ -17,6 +17,12 @@ from rest_framework.permissions import AllowAny
 from rest_framework.authtoken.models import Token
 from django.conf import settings
 from django.contrib.auth.hashers import check_password
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.exceptions import AuthenticationFailed
+from django.contrib.auth.hashers import check_password
+from django.utils import timezone
+from .models import User
 from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
@@ -279,7 +285,6 @@ class RegisterView(APIView):
 
 
 class LoginView(APIView):
-    permission_classes = []
     def post(self, request):
         email = request.data.get('email')
         password = request.data.get('password')
@@ -295,23 +300,18 @@ class LoginView(APIView):
             raise AuthenticationFailed('Incorrect password!')
 
         # Génération du token JWT
-        payload = {
-            'user_id': user.id,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
-            'iat': datetime.datetime.utcnow()
-        }
-        token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256').decode('utf-8')
-        response = Response()
+        token = generate_jwt_token(user)
+        return Response({'token': token, 'role': user.role_id.name})
 
-        response.set_cookie(key='jwt', value=token, httponly=True)
-        response.data = {
-            'jwt': token
-        }
-        response = Response({'token': token})
-        response.set_cookie(key='jwt', value=token, httponly=True)
-        return response
-        # Création de la réponse avec le token
-       # return Response({'token': token})
+def generate_jwt_token(user):
+    payload = {
+        'user_id': user.id,
+        'exp': timezone.now() + timezone.timedelta(minutes=60),
+        'iat': timezone.now()
+    }
+    # Vous pouvez ajouter d'autres informations dans le payload si nécessaire
+    return jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256').decode('utf8')
+
 
 class UserView(APIView):
     permission_classes = []
