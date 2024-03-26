@@ -24,7 +24,7 @@ REQUIRED_FIELDS = []
 
 
 class Temoinage(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.TextField(default='')
     contenu = models.TextField()
     note = models.IntegerField()
 
@@ -33,15 +33,15 @@ class Blog(models.Model):
     titre = models.CharField(max_length=100)
     contenu = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
-    id_user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.titre
 
 
 class Contact(models.Model):
-    description = models.TextField()
-    id_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.TextField(default='')
+    message = models.CharField(max_length=100, default='')
+    email = models.EmailField(max_length=100, default='')
 
     def __str__(self):
         return self.description

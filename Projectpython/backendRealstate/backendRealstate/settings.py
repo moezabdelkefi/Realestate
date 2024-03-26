@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import datetime
+import os
 from pathlib import Path
 from django.core.files.storage import FileSystemStorage
 from datetime import timedelta
@@ -43,7 +44,7 @@ INSTALLED_APPS = [
     'category',
     'userAuth',
     'corsheaders',
-    'Service',
+    'service',
 
 
 
@@ -143,10 +144,10 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # URL de base pour servir les fichiers média
 MEDIA_URL = '/media/'
-
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Définir le stockage par défaut pour les fichiers média
 DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
