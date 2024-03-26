@@ -2,7 +2,9 @@ from django.contrib import admin
 from django.urls import path , include
 
 from . import views
-from .views import RegisterView,LoginView,UserView,LogoutView
+from .views import RegisterView, LoginView, UserView, LogoutView, add_contact
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('role-create/', views.create_role, name='role-create'),
@@ -31,10 +33,13 @@ urlpatterns = [
     path('blog-delete/<int:pk>/', views.delete_blog, name='blog-delete'),
     path('blogs/', views.list_blogs, name='list-blogs'),
     path('blog-search/<int:pk>/', views.searchBlogById, name='blog-search-by-id'),
+    path('blog-detail/<int:pk>/', views.ViewBlog, name='blog-detail'),
 
-    path('contact-create/', views.create_contact, name='contact-create'),
+    path('api/add_contact/', views.add_contact, name='add_contact'),
     path('contact-update/<int:pk>/', views.update_contact, name='contact-update'),
     path('contact-delete/<int:pk>/', views.delete_contact, name='contact-delete'),
     path('contacts/', views.list_contacts, name='list-contacts'),
     path('contact-search/<int:pk>/', views.searchContactById, name='contact-search-by-id'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

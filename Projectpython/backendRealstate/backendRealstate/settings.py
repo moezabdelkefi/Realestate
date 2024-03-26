@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'userAuth',
     'corsheaders',
     'service',
-
+    'blog',
 
 
 

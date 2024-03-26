@@ -24,6 +24,10 @@ from django.contrib.auth.hashers import check_password
 from django.utils import timezone
 from .models import User
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.decorators import parser_classes
+
+
 # Create your views here.
 
 """User"""
@@ -162,6 +166,7 @@ def searchTemoinageById(request, pk):
 
 """Blog"""
 @api_view(['POST'])
+@parser_classes([MultiPartParser, FormParser])
 def create_blog(request):
         if request.method == 'POST':
             serializer = BlogSerializer(data=request.data)
@@ -214,16 +219,26 @@ def searchBlogById(request, pk):
         return Response({"message": "Blog not found"}, status=status.HTTP_404_NOT_FOUND)
 
 
+@api_view(['GET'])
+def ViewBlog(request, pk):
+    try:
+        blog = Blog.objects.get(id=pk)
+    except Blog.DoesNotExist:
+        return Response({"message": "Blog does not exist"}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = BlogSerializer(blog)
+    return Response(serializer.data)
+
 
 """Contact"""
 @api_view(['POST'])
-def create_contact(request):
-        if request.method == 'POST':
-            serializer = ContactSerializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+def add_contact(request):
+    if request.method == 'POST':
+        serializer = ContactSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['PUT'])
