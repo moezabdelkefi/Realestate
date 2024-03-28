@@ -59,7 +59,7 @@ function App() {
   };
 
   useEffect(() => {
-    navigate("/Login");
+    navigate("/");
   }, []);
 
   // Loader when page is loading
@@ -112,20 +112,13 @@ function App() {
           <Route path="/AgentList" element={<AgentList />} />
           <Route path="/ForgetPasswordPage" element={<ForgetPasswordPage />} />
           <Route path="/Testimonial" element={<Testimonial />} />
-          <Route path="/UpdateProfile" element={<UpdateProfile />} />
+          <Route path="/home" element={<Home />} />
+       
           {/* Redirection vers /Login */}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
-      {/* Conditionally render Footer if route is not Login or Singin */}
-      {/* {!isLoginPage && !isSinginPage && (
-        <div className="px-[2%] md:px-[6%] bg-card-dark border border-card-dark">
-          <NewsLetter />
-          <div className="mt-20">
-            <Footer />
-          </div>
-        </div>
-      )} */}
+ 
       <BackToTopButton showButton={showButton} />
     </div>
   );

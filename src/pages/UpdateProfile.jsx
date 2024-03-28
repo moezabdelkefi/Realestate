@@ -1,128 +1,88 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from "react";
 
 const UpdateProfile = () => {
-  const fileInputRef = useRef(null); // Référence pour l'input de type file
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [role, setRole] = useState("user"); // Initialisation avec "user"
 
-  // State pour stocker les données du formulaire et les erreurs
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    phoneNumber: '',
-    profileImage: null // Pour stocker l'image de profil
-  });
-  const [formErrors, setFormErrors] = useState({
-    name: '',
-    email: '',
-    password: '',
-    phoneNumber: ''
-  });
-
-  // Fonction pour mettre à jour les données du formulaire lors de la saisie
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    // Réinitialiser l'erreur du champ lorsque l'utilisateur commence à taper à nouveau
-    setFormErrors({ ...formErrors, [name]: '' });
-  };
-
-  // Fonction pour gérer la soumission du formulaire
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Validation des champs
-    const errors = {};
-    Object.keys(formData).forEach(key => {
-      const errorMessage = validateField(key, formData[key]);
-      if (errorMessage) {
-        errors[key] = errorMessage;
-      }
-    });
-
-    // Affichage des erreurs s'il y en a
-    if (Object.keys(errors).length > 0) {
-      setFormErrors(errors);
+  const handleAddTestimonial = () => {
+    // Vérifier que tous les champs sont remplis
+    if (!name || !email || !password || !phone) {
+      alert("Please fill in all fields");
       return;
     }
 
-    // Si pas d'erreurs, envoyer les données au serveur ou effectuer d'autres actions
-    console.log(formData);
-  };
+    // Créer un nouvel objet de témoignage
+    const newTestimonial = {
+      name,
+      email,
+      password,
+      phone,
+      role,
+    };
 
-  // Fonction pour valider un champ spécifique
-  const validateField = (fieldName, value) => {
-    switch (fieldName) {
-      case 'name':
-        return value.trim() ? '' : 'Name is required';
-      case 'email':
-        return /^\S+@\S+\.\S+$/.test(value) ? '' : 'Email is invalid';
-      case 'password':
-        return value.length >= 6 ? '' : 'Password must be at least 6 characters long';
-      case 'phoneNumber':
-        return /^\d{10}$/.test(value) ? '' : 'Phone number is invalid';
-      default:
-        return '';
-    }
-  };
+    // Afficher l'alerte de succès
+    alert("Profile updated successfully");
 
-  // Fonction pour gérer le clic sur l'image de profil
-  const handleImageClick = () => {
-    fileInputRef.current.click(); // Déclenche l'input de type file
+    // Envoyer les données à l'API
+    fetch("http://localhost:8000/userAuth/update_user/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newTestimonial)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      // Mettre à jour les informations de profil
+      // (à définir selon la réponse de l'API)
+      // Exemple: setProfileData(data);
+      // Réinitialiser les champs du formulaire après la mise à jour du profil
+      setName("");
+      setEmail("");
+      setPassword("");
+      setPhone("");
+      setRole("user"); // Réinitialisation de l'état du rôle à "user"
+    })
+    .catch(error => {
+      console.error('There was an error!', error.message);
+      alert("Failed to update profile");
+    });
   };
 
   return (
-    <div className="container-fluid d-flex justify-content-center align-items-center min-vh-100">
-      <div className="card p-3 shadow" style={{ width: '100%', maxWidth: '500px' }}>
-        <h2 className="mb-3 text-center">Update Profile</h2>
-        <form onSubmit={handleSubmit} className="mx-auto">
-          <div className="mb-3">
-            <label htmlFor="name" className="form-label">Name:</label>
-            <input
-              type="text"
-              className="form-control"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-            />
+    <div className="h-screen flex items-center justify-center relative">
+      <div className="w-96 border rounded p-8 shadow-lg">
+        <h2 className="mb-6 text-2xl font-bold text-center">Update Profile</h2>
+        <form onSubmit={(e) => e.preventDefault()}>
+          <div className="mb-4">
+            <label htmlFor="role" className="block mb-2 text-lg font-medium">I'm a:</label>
+            <input type="text" className="w-full px-4 py-2 border rounded focus:outline-none focus:border-blue-500" id="role" value={role} onChange={(e) => setRole(e.target.value)} />
           </div>
-          {formErrors.email && <p className="text-danger">{formErrors.email}</p>}
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">Email:</label>
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-            />
+          <div className="mb-4">
+            <label htmlFor="name" className="block mb-2 text-lg font-medium">Name:</label>
+            <input type="text" className="w-full px-4 py-2 border rounded focus:outline-none focus:border-blue-500" id="name" value={name} onChange={(e) => setName(e.target.value)} />
           </div>
-          {formErrors.password && <p className="text-danger">{formErrors.password}</p>}
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">Password:</label>
-            <input
-              type="password"
-              className="form-control"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-            />
+          <div className="mb-4">
+            <label htmlFor="email" className="block mb-2 text-lg font-medium">Email:</label>
+            <input type="email" className="w-full px-4 py-2 border rounded focus:outline-none focus:border-blue-500" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
           </div>
-          {formErrors.phoneNumber && <p className="text-danger">{formErrors.phoneNumber}</p>}
-          <div className="mb-3">
-            <label htmlFor="phoneNumber" className="form-label">Phone:</label>
-            <input
-              type="text"
-              className="form-control"
-              id="phoneNumber"
-              name="phoneNumber"
-              value={formData.phoneNumber}
-              onChange={handleChange}
-            />
+          <div className="mb-4">
+            <label htmlFor="password" className="block mb-2 text-lg font-medium">Password:</label>
+            <input type="password" className="w-full px-4 py-2 border rounded focus:outline-none focus:border-blue-500" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
           </div>
-          <button type="submit" className="btn btn-primary btn-block">Update</button>
+          <div className="mb-4">
+            <label htmlFor="phone" className="block mb-2 text-lg font-medium">Phone:</label>
+            <input type="tel" className="w-full px-4 py-2 border rounded focus:outline-none focus:border-blue-500" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+          </div>
+          <button type="button" className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600" onClick={handleAddTestimonial}>Update Profile</button>
         </form>
       </div>
     </div>

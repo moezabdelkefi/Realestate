@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
@@ -21,8 +21,12 @@ const Login = () => {
     setOpen(!open);
   };
 
-  const handleEmail = (e) => {
+  const handleEmail = (e) => { 
+    const { value } = e.target;
     setEmail(e.target.value);
+    setEmail(value);
+    // Stocker l'e-mail dans le localStorage lorsqu'il est modifié
+    localStorage.setItem('storedEmail', value);
   };
 
   const handlePassword = (e) => {
@@ -31,8 +35,15 @@ const Login = () => {
   const handleCreateAccount = () => {
     window.location.href = "/SignIn";
   };
-
+  useEffect(() => {
+    // Vérifier si l'e-mail est déjà stocké dans le localStorage
+    const storedEmail = localStorage.getItem('storedEmail');
+    if (storedEmail) {
+      setEmail(storedEmail);
+    }
+  }, []);
   const handleLogin = async (e) => {
+    localStorage.setItem('userEmail', email);
     e.preventDefault();
     if (!email || !password) {
       toast.error("Please fill in all the fields");
@@ -48,10 +59,11 @@ const Login = () => {
       // Redirection basée sur le rôle de l'utilisateur
       if (userRole === 'user') {
         // Rediriger vers localhost:3000 pour les utilisateurs réguliers
-        navigate("/");
+        navigate("/home");
       } else if (userRole === 'agent' || userRole === 'admin') {
+        localStorage.setItem('loggedInEmail', email);
         // Rediriger vers localhost:5173 pour les agents et les administrateurs
-        window.location.href = "http://localhost:5173/";
+        window.location.href = `http://localhost:5173/?email=${encodeURIComponent(email)}`;
       } else {
         // En cas de rôle non défini ou inconnu, afficher un message d'erreur
         toast.error("Invalid user role. Please contact support.");
@@ -88,6 +100,8 @@ const Login = () => {
     try {
       const res = await axios.post("http://localhost:8000/api/google/login/", {
         access_token: response.accessToken,
+        email: response.profileObj.email, // Récupérez l'email du profil Google
+        // Vous pouvez également envoyer d'autres informations du profil si nécessaire
       });
       console.log(res.data);
       window.location.href = "http://localhost:5173/";
@@ -95,6 +109,7 @@ const Login = () => {
       console.error("Erreur de connexion avec Google:", error);
     }
   };
+  
   const isAuthenticated = true;
   const reachGoogle = () => {
     const clientID = "53218872031-vv5sjci0ljkm8vhqrkg80168uf8cgsns.apps.googleusercontent.com";
@@ -182,10 +197,12 @@ const Login = () => {
         </form>
         <p className="text-sm mt-4 text-black font-bold">
           Don't have an account?{" "}
-          <button onClick={handleCreateAccount} className="text-primary">
+          {/* <button onClick={handleCreateAccount} className="text-primary">
             Create Account
-          </button>
-          .
+          </button> */}
+          <Link to="/SignIn" className="text-primary">
+  Create Account
+</Link>
         </p>
       </div>
       <ToastContainer />

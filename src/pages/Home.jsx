@@ -1,3 +1,4 @@
+import Navbar2 from "../components/common/Navbar2";
 import {
   // Brands,
   Counter,
@@ -17,6 +18,7 @@ import {
 const Home = () => {
   return (
     <div className="pt-16 px-[3%] md:px-[6%]">
+      {/* <Navbar/> */}
       <Hero />
       <Filters />
       <Invest />

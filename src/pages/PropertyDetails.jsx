@@ -52,27 +52,28 @@ const PropertyDetails = () => {
                         </div>
                         <div className="flex-1 border w-full mb-8 rounded-lg px-6 py-8">
                             <div className="flex items-center gap-x-4">
-                                <div className="rounded-md overflow-hidden w-20 h-20">
+                                <h1>Make an appointment</h1>
+                                {/* <div className="rounded-md overflow-hidden w-20 h-20">
                                     <img src={house.agent.image} alt={`Agent ${house.agent.name}`} />
-                                </div>
+                                </div> */}
                                 <div>
-                                    <div className="font-bold text-lg"> {house.agent.name} </div>
+                                    {/* <div className="font-bold text-lg"> {house.agent.name} </div> */}
                                     <div className="flex gap-x-2 items-center">
-                                       <p>{house.agent.rating}</p> 
-                                    <FaStar className="text-yellow-500 ml-1" />
+                                       {/* <p>{house.agent.rating}</p>  */}
+                                    {/* <FaStar className="text-yellow-500 ml-1" /> */}
                                     </div>
-                                    <Link to={'/AgentList'} className="text-violet-700 text-sm">View Listings</Link>
+                                    {/* <Link to={'/AgentList'} className="text-violet-700 text-sm">View Listings</Link> */}
                                 </div>
                             </div>
                             <br />
                             <form className="flex flex-col gap-y-4">
                                 <input className="border rounded w-full px-2 h-10 p-4 text-sm bg-inherit focus:border-violet-700" type="text" placeholder="Name" />
                                 <input className="border rounded w-full px-2 p-4 h-10 text-sm bg-inherit focus:border-violet-700" type="text" placeholder="Email" />
-                                <input className="border rounded w-full px-2 p-4 h-10 bg-inherit focus:border-violet-700" type="text" placeholder="Phone" />
+                                {/* <input className="border rounded w-full px-2 p-4 h-10 bg-inherit focus:border-violet-700" type="text" placeholder="Phone" /> */}
                                 <textarea className="border rounded w-full p-4 px-2 h-40 text-sm bg-inherit focus:border-violet-700" placeholder="Message" />
                                 <div className="flex gap-x-2">
                                     <button className="bg-violet-700 hover:bg-violet-800 text-white rounded p-4 text-sm w-full transition ">Send message</button>
-                                    <button className="border border-violet-500 text-violet-800 hover:border-violet-500 hover:text-violet-500 rounded p-4 text-sm w-full transition">Call</button>
+                                    {/* <button className="border border-violet-500 text-violet-800 hover:border-violet-500 hover:text-violet-500 rounded p-4 text-sm w-full transition">Call</button> */}
                                 </div>
                             </form>
                         </div>

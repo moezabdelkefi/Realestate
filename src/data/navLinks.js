@@ -39,6 +39,11 @@ export const navLinks = [
     id: 7,
     linkText: "Contact",
     url: "/contact",
-  },
+  }, 
+  // {
+  //   id: 8,
+  //   linkText: "homePage",
+  //   url: "/home",
+  // }
  
 ];

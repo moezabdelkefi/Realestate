@@ -16,36 +16,7 @@ import {
 import { navLinks } from "../../data/navLinks";
 import SingleLink from "./SingleLink";
 import {  useLocation} from "react-router-dom";
-const Navbar = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userEmail, setUserEmail] = useState('');
-
-  useEffect(() => {
-    const userEmailFromStorage = localStorage.getItem('userEmail');
-    if (userEmailFromStorage) {
-      setUserEmail(userEmailFromStorage);
-      setIsLoggedIn(true);
-    }
-  }, []);
-
-  const handleLogin = () => {
-   
-    navigate("/Login"); 
-    // const email = prompt('Veuillez entrer votre adresse e-mail');
-    // if (email) {
-    //   localStorage.setItem('userEmail', email);
-    //   setUserEmail(email);
-    //   setIsLoggedIn(true);
-    // }
-  };
-
-  const handleLogout = () => {
-    // Logique de déconnexion
-    localStorage.removeItem('userEmail');
-    setUserEmail('');
-    setIsLoggedIn(false);
-  };
-
+const Navbar2 = () => {
   const rootDoc = document.querySelector(":root");
   const { darkMode, isSidebarOpen } = useSelector(uiStore);
   const [showSearchBar, setShowSearchBar] = useState(false);
@@ -54,19 +25,12 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('user'));
+  // Dark mode toggle
   const handleDarkMode = () => {
     dispatch(toggleDarkMode());
   };
-  const handleLoginClick = () => {
-   
-    setIsLoggedIn(true);
-  };
 
-  // Fonction pour basculer entre l'affichage et la dissimulation du menu de profil
-  const toggleProfileMenu = () => {
-    setShowProfileMenu(!showProfileMenu);
-  };
   // Store darkmode value to localStorage;
   useEffect(() => {
     if (darkMode) rootDoc.classList.add("dark");
@@ -88,45 +52,30 @@ const Navbar = () => {
     e.preventDefault();
     navigate("/search");
   };
-  // const handleLogout = () => {
-  //   localStorage.removeItem('user');
-  //   setIsLoggedIn(false); // Mettre à jour l'état de connexion
-  //   navigate("/"); // Redirection vers la page de connexion
-  // };
-  // const handleLogin = () => {
-   
-  //   navigate("/Login"); 
-  // };
-  useEffect(() => {
-    const storedEmail = localStorage.getItem('userEmail');
-    if (storedEmail) {
-      setUserEmail(storedEmail);
-    }
-  }, []);
-  
-  const handleLoginLogout = () => {
-    setIsLoggedIn(!isLoggedIn);
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    setIsLoggedIn(false); // Mettre à jour l'état de connexion
+    navigate("/"); // Redirection vers la page de connexion
   };
-  function AuthButton({ isLoggedIn, handleLogin, handleLogout, userEmail }) {
-    if (isLoggedIn) {
-      return (
-        <div className="relative">
-          <FiUser
-            className="bg-white shadow-md icon-box dark:bg-dark-light hover:shadow-lg hover:bg-transparent cursor-pointer"
-            onClick={handleLogout}
-          />
-          <span className="ml-2">{userEmail}</span>
-        </div>
-      );
-    } else {
-      return (
-        <FiLogIn
-          className="bg-white shadow-md icon-box dark:bg-dark-light hover:shadow-lg hover:bg-transparent cursor-pointer"
-          onClick={handleLogin}
-        />
-      );
-    }
-  }
+  const handleLogin = () => {
+    // Gérer la logique de connexion de l'utilisateur, par exemple, en redirigeant vers la page de connexion
+    navigate("/Login"); // Redirection vers la page de connexion
+  };
+  useEffect(() => {
+    setIsLoggedIn(localStorage.getItem('user'));
+  }, [location]); // Update isLoggedIn when location changes
+  const handleLoginLogout = () => {
+    navigate("/Login");
+  };
+  const handleLoginClick = () => {
+    // Gérer la logique de connexion ici
+    setIsLoggedIn(true);
+  };
+
+  // Fonction pour basculer entre l'affichage et la dissimulation du menu de profil
+  const toggleProfileMenu = () => {
+    setShowProfileMenu(!showProfileMenu);
+  };
   return (
     <div
       className="navbar h-[45px] fixed w-full z-20 top-0 left-0 px-[2%]  md:px-[6%] flex-center-between py-[0.35rem] bg-white/60 border-b backdrop-blur-sm dark:border-dark dark:bg-card-dark/60"
@@ -225,20 +174,48 @@ const Navbar = () => {
 
 {/*----------------------------- Dark mode toggle-------------------------------------------------- */}
 <div className="flex items-center">
-      <div
-        className="bg-white shadow-md icon-box dark:bg-dark-light hover:shadow-lg hover:bg-transparent"
-        onClick={handleDarkMode}
-      >
-        {darkMode ? <FiSun /> : <FiMoon />}
-      </div>
+  <div
+    className="bg-white shadow-md icon-box dark:bg-dark-light hover:shadow-lg hover:bg-transparent"
+    onClick={handleDarkMode}
+  >
+    {darkMode ? <FiSun /> : <FiMoon />}
+  </div>
+  
+  {!isLoggedIn && location.pathname !== '/home' && (
+        <div className="relative">
+          <FiLogIn className="bg-white shadow-md icon-box dark:bg-dark-light hover:shadow-lg hover:bg-transparent cursor-pointer" onClick={handleLoginClick} />
+          {showProfileMenu && (
+            <div className="absolute right-0 top-full bg-white shadow-md dark:bg-dark-light mt-1 w-36 rounded-md overflow-hidden">
+              <Link to="/login" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800"></Link>
+            </div>
+          )}
+        </div>
+      )}
 
-      {/* Utilisation du composant AuthButton pour afficher l'icône de connexion ou de profil */}
-      <AuthButton
-        isLoggedIn={isLoggedIn}
-        handleLogin={handleLogin}
-        handleLogout={handleLogout}
-        userEmail={userEmail}
-      />
+      {isLoggedIn && location.pathname !== '/' && (
+        <div className="relative">
+          <FiUser className="bg-white shadow-md icon-box dark:bg-dark-light hover:shadow-lg hover:bg-transparent cursor-pointer" onClick={toggleProfileMenu} />
+          {showProfileMenu && (
+            <div className="absolute right-0 top-full bg-white shadow-md dark:bg-dark-light mt-1 w-36 rounded-md overflow-hidden">
+              {/* Ajoutez ici les liens du menu déroulant pour l'utilisateur connecté */}
+            </div>
+          )}
+        </div>
+      )}
+
+      {location.pathname === '/home' && (
+        // Nouvelle barre de navigation pour la page d'accueil
+        <div>
+          {/* Ajoutez ici les éléments de la barre de navigation pour la page d'accueil */}
+          {/* Par exemple, icône de profil */}
+          <FiUser className="bg-white shadow-md icon-box dark:bg-dark-light hover:shadow-lg hover:bg-transparent cursor-pointer" onClick={toggleProfileMenu} />
+          {showProfileMenu && (
+            <div className="absolute right-0 top-full bg-white shadow-md dark:bg-dark-light mt-1 w-36 rounded-md overflow-hidden">
+              {/* Ajoutez ici les liens du menu déroulant pour la page d'accueil */}
+            </div>
+          )}
+        </div>
+      )}
     </div>
         {/*------------------------------- Mobile Menu Toogle------------------------- */}
 
@@ -255,4 +232,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Navbar2;
