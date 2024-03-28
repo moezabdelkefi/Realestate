@@ -27,6 +27,9 @@ urlpatterns = [
     path('temoinage-delete/<int:pk>/', views.delete_temoinage, name='temoinage-delete'),
     path('temoinages/', views.list_temoinages, name='list-temoinages'),
     path('temoinage-search/<int:pk>/', views.searchTemoinageById, name='temoinage-search-by-id'),
+    path('temoinage-detail/<int:pk>/', views.ViewTemoinage, name='temoinage-detail'),
+
+
 
     path('blog-create/', views.create_blog, name='blog-create'),
     path('blog-update/<int:pk>/', views.update_blog, name='blog-update'),

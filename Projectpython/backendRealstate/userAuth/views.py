@@ -163,6 +163,16 @@ def searchTemoinageById(request, pk):
     except Temoinage.DoesNotExist:
         return Response({"message": "Temoinage not found"}, status=status.HTTP_404_NOT_FOUND)
 
+@api_view(['GET'])
+def ViewTemoinage(request, pk):
+    try:
+        temoinage = Temoinage.objects.get(id=pk)
+    except Temoinage.DoesNotExist:
+        return Response({"message": "Temoinage does not exist"}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = TemoinageSerializer(temoinage)
+    return Response(serializer.data)
+
 
 """Blog"""
 @api_view(['POST'])
